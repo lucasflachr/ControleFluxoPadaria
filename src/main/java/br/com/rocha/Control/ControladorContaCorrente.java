@@ -76,7 +76,7 @@ public class ControladorContaCorrente {
 			throw new Exception("Dados incorretos.");
 		}
 		if (numeroConta == null) {
-			throw new Exception("Falta dados para o Cadastro.");
+			throw new Exception("Faltam dados para o Cadastro.");
 		}
 	}
 

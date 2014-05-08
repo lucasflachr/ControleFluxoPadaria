@@ -107,7 +107,7 @@ public class ControladorContaCorrenteTest extends TestCase {
 	 * Método responsável pelos testes do cenário 002.05.
 	 */
 	public void testDadosIncompletos() {
-		String mensagemValidacao = "Falta dados para o Cadastro.";
+		String mensagemValidacao = "Faltam dados para o Cadastro.";
 		String mensagemRetorno = "";
 		
 		try {
@@ -120,7 +120,7 @@ public class ControladorContaCorrenteTest extends TestCase {
 	}
 	
 	/**
-	 * Método responsável pelos testes do cenário 002.05.
+	 * Método responsável pelos testes do cenário 005.01.
 	 */
 	public void testConsultaContas() {
 		
