@@ -6,6 +6,7 @@ import java.util.List;
 import br.com.rocha.ContaBean;
 import br.com.rocha.Model.HibernateFactory;
 import br.com.rocha.Model.entidades.ContaCorrenteVO;
+import br.com.rocha.Exception.RochaException;
 import br.com.rocha.Hibernate.ContaCorrenteSingletonSequence;
 import br.com.rocha.Hibernate.HibernateUtil;
 
@@ -26,13 +27,11 @@ public class ControladorContaCorrente {
 	 * @throws Exception
 	 */
 	public void incluirContaCorrente(Integer numeroConta, Integer codigoBanco,
-			String descricao, Integer saldo) throws Exception {
+			String descricao, Integer saldo) throws RochaException, Exception {
 
 		try {
 			HibernateUtil.currentTransaction();
 			
-			this.validarDadosInclusaoConta(numeroConta, codigoBanco, descricao, saldo);
-
 			ContaCorrenteVO contaCorrente = new ContaCorrenteVO();
 
 			contaCorrente.setCodigoConta(ContaCorrenteSingletonSequence
@@ -42,14 +41,18 @@ public class ControladorContaCorrente {
 			contaCorrente.setDescricaoConta(descricao);			
 			contaCorrente.setSaldo(saldo);
 			
-
+			this.validarDadosInclusaoConta(contaCorrente);
+			
 			HibernateFactory hibernateFactory = new HibernateFactory();
 
 			hibernateFactory.getIContaCorrente().incluirContaCorrente(
 					contaCorrente);
 
 			HibernateUtil.commitTransaction();
-
+			
+		} catch (RochaException e) {
+			HibernateUtil.rollbackTransaction();
+			throw e;
 		} catch (Exception e) {
 			HibernateUtil.rollbackTransaction();
 			e.printStackTrace();
@@ -66,17 +69,16 @@ public class ControladorContaCorrente {
 	 * @param saldo
 	 * @throws Exception
 	 */
-	private void validarDadosInclusaoConta(Integer numeroConta, Integer codigoBanco,
-			String descricao, Integer saldo) throws Exception {
+	private void validarDadosInclusaoConta(ContaCorrenteVO contaCorrentoVO) throws RochaException, Exception {
 		
-		if (saldo.compareTo(0) < 0) {
-			throw new Exception("Preencher os dados corretamente.");
+		if (contaCorrentoVO.getSaldo().compareTo(0) < 0) {
+			throw new RochaException("Preencher os dados corretamente.");
 		}
-		if (codigoBanco.compareTo(9999) == 0) {
-			throw new Exception("Dados incorretos.");
+		if (contaCorrentoVO.getAgencia().compareTo(9999) == 0) {
+			throw new RochaException("Dados incorretos.");
 		}
-		if (numeroConta == null) {
-			throw new Exception("Faltam dados para o Cadastro.");
+		if (contaCorrentoVO.getNumeroConta() == null) {
+			throw new RochaException("Faltam dados para o Cadastro.");
 		}
 	}
 
@@ -97,7 +99,7 @@ public class ControladorContaCorrente {
 	 * @return
 	 * @throws Exception
 	 */
-	public List<ContaBean> pesquisarContas(Integer agencia) throws Exception {
+	public List<ContaBean> pesquisarContas(Integer agencia) throws RochaException, Exception {
 
 		List<ContaBean> list = new ArrayList<ContaBean>();
 
@@ -120,8 +122,10 @@ public class ControladorContaCorrente {
 					list.add(bean);
 				}
 			} else {
-				throw new Exception("Nenhuma conta foi cadastrada.");
+				throw new RochaException("Nenhuma conta foi cadastrada.");
 			}
+		} catch (RochaException e) {
+			throw e;
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw e;

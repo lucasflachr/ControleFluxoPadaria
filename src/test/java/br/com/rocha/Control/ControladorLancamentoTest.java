@@ -37,7 +37,7 @@ public class ControladorLancamentoTest extends TestCase {
 			this.limparLancamentos(22, 888, new Date(), 10);
 		} catch (Exception e) {
 		}
-
+		
 		assertEquals(statusInclusao, "OK");
 	}
 

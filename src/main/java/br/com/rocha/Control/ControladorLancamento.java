@@ -11,6 +11,7 @@ import br.com.rocha.Model.HibernateFactory;
 import br.com.rocha.Model.entidades.ContaCorrenteVO;
 import br.com.rocha.Model.entidades.LancamentoVO;
 import br.com.rocha.Model.entidades.TransferenciaVO;
+import br.com.rocha.Exception.RochaException;
 import br.com.rocha.Hibernate.HibernateUtil;
 
 /**
@@ -102,6 +103,9 @@ public class ControladorLancamento {
 			controladorCC.alterarConta(contaDestino);
 
 			HibernateUtil.commitTransaction();
+		} catch (RochaException e) {
+			HibernateUtil.rollbackTransaction();
+			throw e;
 		} catch (Exception e) {
 			HibernateUtil.rollbackTransaction();
 			e.printStackTrace();
@@ -127,11 +131,11 @@ public class ControladorLancamento {
 		if (numeroContaOrigem == null || numeroContaDestino == null
 				|| valorLancamento == null || tipo == null
 				|| dataLancamento == null)
-			throw new Exception("Primeiro complete os dados do Lancamento.");
+			throw new RochaException("Primeiro complete os dados do Lancamento.");
 		else if (valorLancamento.compareTo(0) <= 0)
-			throw new Exception("Dados incorretos ou nao preenchidos.");
+			throw new RochaException("Dados incorretos ou nao preenchidos.");
 		else if (dataLancamento.before(this.dataAtual))
-			throw new Exception("Os dados nao foram preenchidos corretamente.");
+			throw new RochaException("Os dados nao foram preenchidos corretamente.");
 
 	}
 
@@ -164,7 +168,6 @@ public class ControladorLancamento {
 					list.add(bean);
 				}
 			}
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
