@@ -35,7 +35,8 @@ public class ContaCorrenteAction extends HttpServlet {
 		try {
 
 			String acaoUsuario = req.getParameter("acaoUsuarioConta");
-
+			String teste = "Teste";
+			
 			if (acaoUsuario != null) {
 				if (acaoUsuario.equals("listaContas")) {
 					this.exibirListaConta(req, resp);
