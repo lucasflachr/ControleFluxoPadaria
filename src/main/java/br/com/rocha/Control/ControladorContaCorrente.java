@@ -36,10 +36,10 @@ public class ControladorContaCorrente {
 
 			contaCorrente.setCodigoConta(ContaCorrenteSingletonSequence
 					.getInstance().getSequenceConta());
-			//contaCorrente.setNumeroConta(numeroConta);
+			contaCorrente.setNumeroConta(numeroConta);
 			contaCorrente.setAgencia(codigoBanco);
 			contaCorrente.setDescricaoConta(descricao);			
-			contaCorrente.setSaldo(saldo);
+			//contaCorrente.setSaldo(saldo);
 			
 			this.validarDadosInclusaoConta(contaCorrente);
 			
