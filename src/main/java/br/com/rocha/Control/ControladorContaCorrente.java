@@ -36,7 +36,7 @@ public class ControladorContaCorrente {
 
 			contaCorrente.setCodigoConta(ContaCorrenteSingletonSequence
 					.getInstance().getSequenceConta());
-			contaCorrente.setNumeroConta(numeroConta);
+			//contaCorrente.setNumeroConta(numeroConta);
 			contaCorrente.setAgencia(codigoBanco);
 			contaCorrente.setDescricaoConta(descricao);			
 			contaCorrente.setSaldo(saldo);
@@ -71,10 +71,10 @@ public class ControladorContaCorrente {
 	 */
 	private void validarDadosInclusaoConta(ContaCorrenteVO contaCorrentoVO) throws RochaException, Exception {
 		
-		if (contaCorrentoVO.getSaldo().compareTo(0) < 0) {
+		if (contaCorrentoVO.getSaldo() == null || contaCorrentoVO.getSaldo().compareTo(0) < 0) {
 			throw new RochaException("Preencher os dados corretamente.");
 		}
-		if (contaCorrentoVO.getAgencia().compareTo(9999) == 0) {
+		if (contaCorrentoVO.getAgencia() == null || contaCorrentoVO.getAgencia().compareTo(9999) == 0) {
 			throw new RochaException("Dados incorretos.");
 		}
 		if (contaCorrentoVO.getNumeroConta() == null) {
