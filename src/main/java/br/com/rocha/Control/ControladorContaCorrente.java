@@ -39,7 +39,7 @@ public class ControladorContaCorrente {
 			contaCorrente.setNumeroConta(numeroConta);
 			contaCorrente.setAgencia(codigoBanco);
 			contaCorrente.setDescricaoConta(descricao);			
-			//scontaCorrente.setSaldo(saldo);
+			contaCorrente.setSaldo(saldo);
 			
 			this.validarDadosInclusaoConta(contaCorrente);
 			
