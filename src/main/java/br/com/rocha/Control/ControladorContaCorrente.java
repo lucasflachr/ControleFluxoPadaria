@@ -74,9 +74,11 @@ public class ControladorContaCorrente {
 		if (contaCorrentoVO.getSaldo() == null || contaCorrentoVO.getSaldo().compareTo(0) < 0) {
 			throw new RochaException("Preencher os dados corretamente.");
 		}
+		
 		if (contaCorrentoVO.getAgencia() == null || contaCorrentoVO.getAgencia().compareTo(9999) == 0) {
 			throw new RochaException("Dados incorretos.");
 		}
+		
 		if (contaCorrentoVO.getNumeroConta() == null) {
 			throw new RochaException("Faltam dados para o Cadastro.");
 		}
